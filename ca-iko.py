@@ -3,6 +3,7 @@ import random
 import os
 import fcntl
 import time
+import OSC
 import pyfirmata
 from pyfirmata import ArduinoMega
 
@@ -15,6 +16,10 @@ from pyfirmata import ArduinoMega
 
 # Creates a new board
 #board = pyfirmata.ArduinoMega(PORT)
+
+# OSC sending
+client = OSC.OSCClient()
+client.connect( ( '127.0.0.1', 7700 ) )
 
 # Break on pushing enter
 fl = fcntl.fcntl(sys.stdin.fileno(), fcntl.F_GETFL)

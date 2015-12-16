@@ -21,3 +21,6 @@ def oscgrain( frequency, vol, sustain ):
     client.send(msg)
 
 oscgrain(5000, 0.8, 0.1)
+time.sleep(0.01)
+oscgrain(5000, 0.8, 0.1)
+    
