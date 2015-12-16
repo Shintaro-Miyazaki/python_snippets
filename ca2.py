@@ -18,15 +18,6 @@ import random
 
 fl = fcntl.fcntl(sys.stdin.fileno(), fcntl.F_GETFL)
 fcntl.fcntl(sys.stdin.fileno(), fcntl.F_SETFL, fl | os.O_NONBLOCK)
-while True:
-    print("Waiting for user input")
-    try:
-        stdin = sys.stdin.read()
-        if "\n" in stdin or "\r" in stdin:
-            break
-    except IOError:
-        pass
-    time.sleep(1)
 
 # Celluar Automata section
 
@@ -82,5 +73,11 @@ for y in range(1000):
             sum = sum + (2**d) * w[(x+d+WIDTH - NEIGHBORHOOD/2) % WIDTH]
         nw[x] = rtab[sum]
     w, nw = nw, w
-# time control
+    # time control
     time.sleep(0.01)
+    try:
+        stdin = sys.stdin.read()
+        if "\n" in stdin or "\r" in stdin:
+            break
+    except IOError:
+        pass
