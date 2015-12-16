@@ -12,10 +12,10 @@ from pyfirmata import ArduinoMega
 # Adjust that the port match your system, see samples below:
 # On Linux: /dev/tty.usbserial-A6008rIF, /dev/ttyACM0,
 # On Windows: \\.\COM1, \\.\COM2
-#PORT = '/dev/tty.usbmodem1451'
+PORT = '/dev/tty.usbmodem1451'
 
 # Creates a new board
-#board = pyfirmata.ArduinoMega(PORT)
+board = pyfirmata.ArduinoMega(PORT)
 
 # OSC sending
 client = OSC.OSCClient()
@@ -69,7 +69,7 @@ def dump(r):
             sys.stdout.write('X')
         else:
             sys.stdout.write(' ')
-    #    board.digital[pin].write(1 if x else 0)
+        board.digital[pin].write(1 if x else 0)
 	pin += 1
     sys.stdout.write('\n')
 
