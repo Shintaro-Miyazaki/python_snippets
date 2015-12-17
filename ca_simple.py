@@ -18,7 +18,7 @@ import random
 
 # Celluar Automata section
 
-WIDTH=40               # How wide is the pattern?
+WIDTH=100               # How wide is the pattern?
 
 w = WIDTH * [0]         # create the current generation
 nw = WIDTH * [0]        # and the next generation
