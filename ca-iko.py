@@ -30,22 +30,7 @@ WIDTH=18               # How wide is the pattern?
 w = WIDTH * [0]         # create the current generation
 nw = WIDTH * [0]        # and the next generation
 w[WIDTH/2] = 1          # populate with a single one
-
-# or alternatively, you can populate it with a random
-# initial configuration.  If you want to start with
-# just a single one, comment the next two lines out.
-
-# for i in range(WIDTH):
-#      w[i] = random.randint(0, 1)
-
-# How wide is the neighborhood of cells that are
-# examined?  The traditional Wolfram 1D cellular
-# automata uses a neighborhood of 3...
-
 NEIGHBORHOOD=3
-
-# rtab is space for the rule table.  It maps all
-# numbers from [0, 2**NEIGHBORHOOD) to either a 0 or 1.
 rtab = (2**NEIGHBORHOOD) * [0]
 
 # The "rule" is a number which is used to populate
