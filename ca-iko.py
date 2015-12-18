@@ -63,7 +63,7 @@ for i in range(2**NEIGHBORHOOD):
         rtab[i] = 1
 
 def dump(r):
-    pin = 18
+    pin = 14
     for x in r:
         if x == 1:
             sys.stdout.write('X')
