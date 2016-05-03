@@ -18,7 +18,7 @@ SynthDef("grain", { |out, amp=0.1, freq=20, sustain=0.001, pan|
 
 (
 Pbindef(\grainplayer,
-	\instrument, \grain, \sustain, 0.001, \freq, 20, \pan, 0.0, \dur, 0.025,
+	\instrument, \grain, \sustain, 0.001, \freq, 20, \pan, 0.0, \dur, 0.25,
 ).play;
 )
 

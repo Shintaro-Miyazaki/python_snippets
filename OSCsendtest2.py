@@ -5,8 +5,12 @@ import time, random
 c = OSC.OSCClient()
 c.connect( ( '127.0.0.1', 57110 ))
 
+arraywidth = 10
+panval = 1.0
+ppan = 1.0
 i = 0
-while (i < 10):
+j= 0
+while (i < arraywidth):
     msg = OSC.OSCMessage()
     msg.setAddress("s_new")
     msg.append("grain")
