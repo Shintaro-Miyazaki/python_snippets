@@ -8,6 +8,7 @@ import OSC
 
 # implementation of Wolfram's 1D cellular automata
 # https://en.wikipedia.org/wiki/Elementary_cellular_automaton
+# http://plato.stanford.edu/entries/cellular-automata/supplement.html 
 
 # setup OSC client and connecting with supercollider
 c = OSC.OSCClient()
@@ -138,6 +139,6 @@ for y in range(numlines):
 # time control
     playclick(1.0)
     # value needs to be between -1.0 and 1.0 this needs to get
-    # "mapped" to array w or nw with size WIDTH 
+    # "mapped" to array w or nw with size WIDTH
     # check index/position in array map  and whether 1 or 0.
     time.sleep(speed)
