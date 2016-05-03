@@ -10,8 +10,8 @@ import OSC
 # https://en.wikipedia.org/wiki/Elementary_cellular_automaton
 
 # setup OSC client and connecting with supercollider
-client = OSC.OSCClient()
-client.connect( ( '127.0.0.1', 57110 ) )
+c = OSC.OSCClient()
+c.connect( ( '127.0.0.1', 57110 ) )
 
 # How wide is the pattern?
 WIDTH = int(sys.argv[2])
@@ -102,6 +102,22 @@ def dump(r):
 speed = float(sys.argv[3]) # speed = seconds for example 0.01
 numlines = int(sys.argv[4]) # number of "lines" for example 100
 
+# Sending OSC
+def playclick(panval):
+    msg = OSC.OSCMessage()
+    msg.setAddress("s_new")
+    msg.append("grain")
+    msg.append(-1)
+    msg.append(0)
+    msg.append(1)
+    msg.append("freq")
+    msg.append(20)
+    msg.append("sustain")
+    msg.append(0.001)
+    msg.append("pan")
+    msg.append(panval)
+    c.send(msg)
+
 # This generates the lines and generations
 for y in range(numlines):
     dump(w) #dump array of current generation (w) to terminal
@@ -120,4 +136,8 @@ for y in range(numlines):
         nw[x] = rtab[sum]
     w, nw = nw, w #swapping
 # time control
+    playclick(1.0)
+    # value needs to be between -1.0 and 1.0 this needs to get
+    # "mapped" to array w or nw with size WIDTH 
+    # check index/position in array map  and whether 1 or 0.
     time.sleep(speed)
