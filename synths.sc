@@ -5,7 +5,7 @@ s.scope(2);
 
 SynthDef("grain", { |out, amp=0.1, freq=20, sustain=0.001, pan|
 	var snd = LFSaw.ar(freq);
-	var amp2 = amp * AmpComp.ir(freq.max(50)) * 0.5;
+	var amp2 = amp * AmpComp.ir(freq.max(50)) * 0.1;
 	var env = EnvGen.ar(Env.perc(sustain, 0.09), doneAction: 2);
 	OffsetOut.ar(out, Pan2.ar(snd * env, pan));
 }, \ir ! 5).add;
