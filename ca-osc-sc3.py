@@ -8,7 +8,7 @@ import OSC
 
 # implementation of Wolfram's 1D cellular automata
 # https://en.wikipedia.org/wiki/Elementary_cellular_automaton
-# http://plato.stanford.edu/entries/cellular-automata/supplement.html 
+# http://plato.stanford.edu/entries/cellular-automata/supplement.html
 
 # setup OSC client and connecting with supercollider
 c = OSC.OSCClient()
@@ -23,14 +23,13 @@ w = WIDTH * [0]
 nw = WIDTH * [0]
 
 # populate with a single one in the middle of the array
-w[WIDTH/2] = 1
+# w[WIDTH/2] = 1
 
 # or alternatively, you can populate it with a random
 # initial configuration.  If you want to start with
 # just a single one, comment the next two lines out.
-
-# for i in range(WIDTH):
-#      w[i] = random.randint(0, 1)
+for i in range(WIDTH):
+    w[i] = random.randint(0, 1)
 
 # Setting neighborhood
 # How wide is the neighborhood of cells that are
@@ -119,6 +118,13 @@ def playclick(panval):
     msg.append(panval)
     c.send(msg)
 
+#scaling for panval
+def scale(arr):
+  s = 2.0/(len(arr)-1)
+  for i in range(len(arr)):
+    if arr[i] != 0:
+      yield -1.0+s*i
+
 # This generates the lines and generations
 for y in range(numlines):
     dump(w) #dump array of current generation (w) to terminal
@@ -136,9 +142,11 @@ for y in range(numlines):
             sum = sum + (2**d) * w[(x+d+WIDTH - NEIGHBORHOOD/2) % WIDTH]
         nw[x] = rtab[sum]
     w, nw = nw, w #swapping
-# time control
-    playclick(1.0)
+    #reads w and scales values to panval
     # value needs to be between -1.0 and 1.0 this needs to get
     # "mapped" to array w or nw with size WIDTH
     # check index/position in array map  and whether 1 or 0.
+    for i in scale(w):
+        playclick(i)
+# time control
     time.sleep(speed)
