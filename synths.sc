@@ -6,10 +6,24 @@ s.scope(2);
 SynthDef("grain", { |out, amp=0.1, freq=20, sustain=0.001, pan|
 	var snd = LFSaw.ar(freq);
 	var amp2 = amp * AmpComp.ir(freq.max(50)) * 0.1;
-	var env = EnvGen.ar(Env.perc(sustain, 0.09), doneAction: 2);
+	var env = EnvGen.ar(Env.perc(sustain, 0.01), doneAction: 2);
 	OffsetOut.ar(out, Pan2.ar(snd * env, pan));
 }, \ir ! 5).add;
 
+
+SynthDef("grain2", { |out, amp=0.8, freq=440, sustain=0.01, pan|
+	var snd = FSinOsc.ar(freq);
+	var amp2 = amp * AmpComp.ir(freq.max(50)) * 0.5;
+	var env = EnvGen.ar(Env.sine(sustain, amp2), doneAction: 2);
+	OffsetOut.ar(out, Pan2.ar(snd * env, pan));
+}, \ir ! 5).add;
+
+SynthDef("noiseburst", { |out, amp=0.1, sustain=0.01, pan|
+	var snd = PinkNoise.ar(1.0);
+	var amp2 = amp * AmpComp.ir(1.max(50)) * 0.5;
+	var env = EnvGen.ar(Env.sine(sustain, amp2), doneAction: 2);
+	OffsetOut.ar(out, Pan2.ar(snd * env, pan));
+}, \ir ! 5).add;
 
 
 )
@@ -18,7 +32,7 @@ SynthDef("grain", { |out, amp=0.1, freq=20, sustain=0.001, pan|
 
 (
 Pbindef(\grainplayer,
-	\instrument, \grain, \sustain, 0.001, \freq, 20, \pan, 0.0, \dur, 0.25,
+	\instrument, \noiseburst, \amp, 0.3, \sustain, 0.025, \pan, 0.0, \dur, 0.07,
 ).play;
 )
 
