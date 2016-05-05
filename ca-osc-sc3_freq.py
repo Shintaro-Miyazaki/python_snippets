@@ -5,6 +5,7 @@ import os
 import fcntl
 import random
 import OSC
+from itertools import izip
 
 # implementation of Wolfram's 1D cellular automata
 # https://en.wikipedia.org/wiki/Elementary_cellular_automaton
@@ -61,8 +62,16 @@ rtab = (2**NEIGHBORHOOD) * [0]
 # rtab. The number is in the range [0, 2**(2**NEIGHBORHOOD))
 # 2**8 = 256
 # Many rules generate uninteresting patterns, but some
-# like 30 generate interesting, aperiodic patterns.
+# generate interesting, aperiodic patterns.
 rule = int(sys.argv[1])
+
+# Interesting rules with initial randomness
+# 2, 24, 94 = very period and simple ones
+# 9, 15, 26 = complicated but periodic
+# 110, 54 = class IV
+# 45, 150, 106, 30, 126, 90, = class III
+#
+
 
 # This fills in the table with ones
 # according to the rule pattern
@@ -103,7 +112,7 @@ speed = float(sys.argv[3]) # speed = seconds for example 0.01
 numlines = int(sys.argv[4]) # number of "lines" for example 100
 
 # Sending OSC
-def playclick(freqs):
+def playclick(freqs, panval):
     msg = OSC.OSCMessage()
     msg.setAddress("s_new")
     msg.append("grain2")
@@ -115,17 +124,24 @@ def playclick(freqs):
     msg.append("freq")
     msg.append(freqs)
     msg.append("sustain")
-    msg.append(0.02)
+    msg.append(speed)
     msg.append("pan")
-    msg.append(0.0)
+    msg.append(panval)
     c.send(msg)
 
 #scaling for freqs
-def scale(arr):
-  s = 2200.0/(len(arr)-1)
+def scalefreq(arr):
+  s = 1760.0/(len(arr)-1)
   for i in range(len(arr)):
     if arr[i] != 0:
-      yield 220.0+s*i #mapped to freq
+      yield 880.0+s*i #mapped to freq
+
+#scaling for panval
+def scalepan(arr):
+  s = 2.0/(len(arr)-1)
+  for i in range(len(arr)):
+    if arr[i] != 0:
+      yield -1.0+s*i
 
 # This generates the lines and generations
 for y in range(numlines):
@@ -148,7 +164,7 @@ for y in range(numlines):
     # value needs to be between -1.0 and 1.0 this needs to get
     # "mapped" to array w or nw with size WIDTH
     # check index/position in array map  and whether 1 or 0.
-    for i in scale(w):
-        playclick(i)
+    for x, y in izip(scalefreq(w), scalepan(w)):
+        playclick(x,y)
 # time control
     time.sleep(speed)
