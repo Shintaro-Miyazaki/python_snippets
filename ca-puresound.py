@@ -148,7 +148,7 @@ numlines = 3*WIDTH
 
 # This generates the lines and generations
 for y in range(numlines):
-    dump(w) #dump array of current generation (w) to terminal
+#    dump(w) #dump array of current generation (w) to terminal
     # then do a for loop: x in [0, 1, 2 ...WIDTH-1]
     for x in range(WIDTH):
         sum = 0
